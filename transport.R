@@ -11,7 +11,7 @@ library(ggmosaic)
 
 
 #Extraction des csv standards
-setwd("C:/Users/paulr/OneDrive/Documents/X 3A/Methodes quantitatives/Données transport/")
+setwd("Données/")
 liste_csv<-list.files(recursive = TRUE, pattern="std.+.csv")
 all_csv <- sapply(liste_csv, read.csv, sep=";", USE.NAMES = TRUE)
 
@@ -93,7 +93,7 @@ df <- df[,c("AGGLO","MODP")]
 
 
 #On remplace les modes numériques par le nom du mode
-dico_df <- read.csv("C:/Users/paulr/OneDrive/Documents/X 3A/Methodes quantitatives/dico_mode_dep_simpl.csv", sep = ",", stringsAsFactors = FALSE)
+dico_df <- read.csv("dico_mode_dep_simpl.csv", sep = ",", stringsAsFactors = FALSE)
 df <- df %>%
   left_join(dico_df, by = c("MODP" = "CODE")) %>%
   select(-MODP) %>%
