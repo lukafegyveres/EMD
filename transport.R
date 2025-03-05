@@ -7,6 +7,9 @@ deplacements_personnes <- deplacements_personnes[,c("AGGLO","ANNEE_ENQUETE","ZFD
 
 domtrav <- subset(deplacements_personnes, (deplacements_personnes$D5A == 1 & deplacements_personnes$D2A == 11) | (deplacements_personnes$D5A == 11 & deplacements_personnes$D2A == 1))
 
+#save(domtrav, file = "data/domtrav.RData")
+
+load("data/domtrav.RData")
 
 #Analyse des modes de déplacement par agglo
 df <- subset(domtrav, domtrav$ANNEE_ENQUETE > 2018)

@@ -78,10 +78,10 @@ for(dir_enquete in names(all_csv)){
   }
 }
 
-save(data_men, file = "../data_men.RData")
-save(data_pers, file = "../data_pers.RData")
-save(data_depl, file = "../data_depl.RData")
-save(data_traj, file = "../data_traj.RData")
+#save(data_men, file = "data/data_men.RData")
+#save(data_pers, file = "data/data_pers.RData")
+#save(data_depl, file = "data/data_depl.RData")
+#save(data_traj, file = "data/data_traj.RData")
 
 load("data/data_depl.RData")
 load("data/data_men.RData")
