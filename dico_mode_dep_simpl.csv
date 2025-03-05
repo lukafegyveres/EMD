@@ -1,0 +1,40 @@
+CODE,MODP_LIB
+1,Marche a pied (et fauteuil roulant)
+10,Velo/petit engin
+11,Velo/petit engin
+12,Velo/petit engin
+17,Velo/petit engin
+18,Velo/petit engin
+13,Scooter/moto
+14,Scooter/moto
+15,Scooter/moto
+16,Scooter/moto
+19,Scooter/moto
+20,Scooter/moto
+21,Voiture
+22,Voiture
+31,TCU
+32,TCU
+33,TCU
+37,TCU
+38,TCU
+39,TCU
+41,TCU
+42,Car LD
+43,Car LD
+51,Train
+52,Train
+53,Train
+54,Train
+61,Taxi
+62,Taxi
+71,Employeur
+81,Employeur
+82,Employeur
+91,Transport Fluvial ou maritime.
+92,Avion.
+93,Velo/petit engin
+94,Marche a pied (et fauteuil roulant)
+95,"Autres modes (tracteur, engin agricole, quad, etc.)."
+96,Velo/petit engin
+97,Velo/petit engin

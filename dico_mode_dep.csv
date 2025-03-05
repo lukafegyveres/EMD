@@ -1,0 +1,41 @@
+CODE,MODP_LIB
+1,Marche a pied.
+10,Conducteur VLS
+11,Conducteur de velo.
+12,Passager de velo.
+17,Conducteur de velo Assistance Electrique
+18,Conducteur de velo Assistance Electrique en Libre Service
+13,Conducteur de deux ou trois roues motorises < 50 cm3.
+14,Passager de deux ou trois roues motorises < 50 cm3.
+15,Conducteur de deux ou trois roues motorises >= 50 cm3
+16,Passager de deux ou trois roues motorises >= 50 cm3.
+19,Conducteur de deux ou trois roues motorises (si pas de detail sur la cylindree).
+20,Passager de deux ou trois roues motorises (si pas de detail sur la cylindree)..
+21,Conducteur de vehicule particulier (VP).
+22,Passager de vehicule particulier (VP).
+31,Passager bus urbain (reseau ville centre).
+32,Passager tramway (reseau ville centre).
+33,Passager metro (reseau ville centre).
+37,Transport a la demande (U ou IU)
+38,Passager autres reseaux urbains ds aire enquete.
+39,Passager autre reseau urbain hors AE
+41,"Passager transports interurbains routiers et autres autocars (TER routiers, lignes
+regulieres departementales, scolaires, periscolaires, occasionnel….)."
+42,"Cars longues distances (Eurolines/Isilines, Ouibus, Flixbus…))."
+43,Passagers autocars anciennes definitions
+51,Passager TGV
+52,Passager train TER
+53,"Passagers autres trains (Intercite, TET)"
+54,Passager train non precise
+61,Passager taxi.
+62,Passager VTC
+71,Transport employeur (exclusivement)
+81,"Conducteur de fourgon, camionnette, camion (pour tournees professionnelles ou deplacements prives)."
+82,"Passager de fourgon, camionnette, camion (pour tournees professionnelles ou deplacements prives).."
+91,Transport Fluvial ou maritime.
+92,Avion.
+93,"Roller, skate, trottinette non electrique"
+94,Fauteuil roulant.
+95,"Autres modes (tracteur, engin agricole, quad, etc.)."
+96,"Petits engins electriques (trottinette, segway, solowheel, etc)"
+97,"Roller, skate, trottinette electrique ou non (ancien code)"
