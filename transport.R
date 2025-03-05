@@ -9,7 +9,7 @@ domtrav <- subset(deplacements_personnes, (deplacements_personnes$D5A == 1 & dep
 
 
 #Analyse des modes de déplacement par agglo
-df <- subset(domtrav)
+df <- subset(domtrav, domtrav$ANNEE_ENQUETE > 2015)
 df <- df[,c("AGGLO","MODP")]
 
 
