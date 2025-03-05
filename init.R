@@ -77,3 +77,5 @@ for(dir_enquete in names(all_csv)){
     data_depl = rbind(data_depl,data_tempo)
   }
 }
+
+save(data_depl, data_men, data_pers, data_traj, file = "../data_emd.RData")
