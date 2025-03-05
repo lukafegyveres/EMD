@@ -83,3 +83,8 @@ save(data_pers, file = "../data_pers.RData")
 save(data_depl, file = "../data_depl.RData")
 save(data_traj, file = "../data_traj.RData")
 
+load("data/data_depl.RData")
+load("data/data_men.RData")
+load("data/data_pers.RData")
+load("data/data_traj.RData")
+
