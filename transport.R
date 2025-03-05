@@ -1,5 +1,13 @@
 setwd("C:/Users/paulr/OneDrive/Documents/X 3A/Methodes quantitatives/EMD")
 
+
+deplacements_personnes <- merge(x=data_depl, y=data_pers, by.x = c("AGGLO","ANNEE_ENQUETE","ZFD", "ECH", "PER"), by.y = c("AGGLO","ANNEE_ENQUETE","ZFP", "ECH", "PER"))
+
+deplacements_personnes <- deplacements_personnes[,c("AGGLO","ANNEE_ENQUETE","ZFD","ECH","PER","NDEP","PCSC","D2A","D5A","MODP")]
+
+domtrav <- subset(deplacements_personnes, (deplacements_personnes$D5A == 1 & deplacements_personnes$D2A == 11) | (deplacements_personnes$D5A == 11 & deplacements_personnes$D2A == 1))
+
+
 #Analyse des modes de déplacement par agglo
 df <- subset(domtrav)
 df <- df[,c("AGGLO","MODP")]
