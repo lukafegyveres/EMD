@@ -78,4 +78,8 @@ for(dir_enquete in names(all_csv)){
   }
 }
 
-save(data_depl, data_men, data_pers, data_traj, file = "../data_emd.RData")
+save(data_men, file = "../data_men.RData")
+save(data_pers, file = "../data_pers.RData")
+save(data_depl, file = "../data_depl.RData")
+save(data_traj, file = "../data_traj.RData")
+
