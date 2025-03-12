@@ -26,3 +26,6 @@ data_tcu$POP <- as.numeric(data_tcu$POP)
 data_tcu$lc_par_hab <-1000* data_tcu$LC / data_tcu$POP
 
 exploitants <- read.csv("exploitants.csv", sep = ",", stringsAsFactors = FALSE)
+donnees_tcu_agglo <- inner_join(data_tcu, exploitants, by="pm_id")
+
+save(donnees_tcu_agglo, file = "data/donnees_agglo.RData")

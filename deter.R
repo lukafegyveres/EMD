@@ -1,4 +1,3 @@
-donnees_tcu_agglo <- inner_join(data_tcu, exploitants, by="pm_id")
 
 dico_df <- read.csv("dico_mode_dep_simpl.csv", sep = ",", stringsAsFactors = FALSE)
 df_domtrav_deter <- domtrav %>%
@@ -16,6 +15,10 @@ df2 <- df2 %>%
   mutate(ANNEE = format(dat_date.x, "%Y") %>% as.numeric())
 
 df1 <- df_domtrav_deter
+
+df1 <- df1 %>%
+  mutate(ANNEE_ENQUETE = as.numeric(ANNEE_ENQUETE))  # S'assurer qu'elle est bien numérique
+
 
 # Trouver la date la plus proche pour chaque AGGLO et ANNEE_ENQUETE
 df_closest <- df2 %>%
