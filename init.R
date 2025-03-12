@@ -8,6 +8,9 @@ library(tidyr)
 library(ggplot2)
 library(gt)
 library(ggmosaic)
+library(FNN)
+library(class)
+library(caret)
 
 
 #Extraction des csv standards
