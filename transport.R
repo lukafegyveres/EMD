@@ -57,3 +57,5 @@ tableau_freq %>%
   gt() %>%
   fmt_percent(columns = everything(), decimals = 1) %>%  # Afficher en pourcentage
   tab_options(table.font.size = "large")
+
+
