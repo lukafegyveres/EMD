@@ -1,4 +1,6 @@
-setwd("C:/Users/lukaf/OneDrive - Ecole Polytechnique/Bureau/Polytechnique/3A/P2/HSS Données et méthodes quantitatives/Données/lil-0921/lil-0921.csv/Csv/Fichiers_Standard_Face_a_face/")
+setwd("C:/Users/lukaf/OneDrive - Ecole Polytechnique/Bureau/Polytechnique/3A/P2/HSS Données et méthodes quantitatives/EMD")
+
+setwd("Données/lil-0921/lil-0921.csv/Csv/Fichiers_Standard_Face_a_face/")
 
 library("openxlsx")
 
