@@ -11,6 +11,7 @@ library(ggmosaic)
 library(FNN)
 library(class)
 library(caret)
+library(pROC)
 
 
 #Extraction des csv standards

@@ -30,39 +30,54 @@ data_deter <- merge(x = df_closest, y = data_men, by.x = c("AGGLO","ANNEE_ENQUET
 
 
 
+# Sélectionner les variables utiles (y compris identifiants individuels)
+data_deter_utile <- data_deter[, c("ZFD", "ECH", "PER", "lc_par_hab", "D11", "P2", "P4", "PCSC", "P7", "MODP_LIB")]
 
-# Sélectionner les variables à inclure (y compris les nouvelles)
-data_deter_utile <- data_deter[, c("lc_par_hab", "D11", "P2", "P4", "PCSC", "P7", "POP", "MODP_LIB")]
-
-# Convertir MODP_LIB en facteur (si ce n'est pas déjà fait)
+# Convertir MODP_LIB en facteur
 data_deter_utile$MODP_LIB <- as.factor(data_deter_utile$MODP_LIB)
 
-# Convertir P2 (sexe) et PCSC (catégorie socio-professionnelle) en facteurs
+# Convertir certaines variables en facteurs
 data_deter_utile$P2 <- as.factor(data_deter_utile$P2)
 data_deter_utile$PCSC <- as.factor(data_deter_utile$PCSC)
+data_deter_utile$P7 <- as.factor(data_deter_utile$P7)
 
-# Créer des variables binaires (One-Hot Encoding) pour P2 et PCSC seulement
-dummies <- dummyVars(~ P2 + PCSC + P7 + lc_par_hab + D11 + P4 + POP, data = data_deter_utile, fullRank = TRUE)
-data_encoded <- predict(dummies, newdata = data_deter_utile) %>% as.data.frame()
+# Créer un identifiant unique par individu
+data_deter_utile <- data_deter_utile %>%
+  mutate(ID_personne = paste(ZFD, ECH, PER, sep = "_"))
 
-# Ajouter MODP_LIB de façon séparée (sans transformation)
-data_encoded$MODP_LIB <- data_deter_utile$MODP_LIB
+# Extraire les individus uniques
+personnes_uniques <- unique(data_deter_utile$ID_personne)
 
-
-# Séparer les données en train/test (80% train, 20% test)
+# Séparer en train/test (80% train, 20% test)
 set.seed(123)
-trainIndex <- createDataPartition(data_encoded$MODP_LIB, p = 0.8, list = FALSE)
-train_data <- data_encoded[trainIndex, ]
-test_data <- data_encoded[-trainIndex, ]
+personnes_train <- sample(personnes_uniques, size = round(0.8 * length(personnes_uniques)))
+
+# Filtrer les déplacements selon les individus sélectionnés
+train_set <- data_deter_utile %>% filter(ID_personne %in% personnes_train)
+test_set  <- data_deter_utile %>% filter(!ID_personne %in% personnes_train)
+
+# Supprimer l'ID_personne
+train_set <- train_set %>% select(-ID_personne, -ZFD, -ECH, -PER)
+test_set  <- test_set %>% select(-ID_personne, -ZFD, -ECH, -PER)
+
+# One-Hot Encoding pour P2, PCSC et P7
+dummies <- dummyVars(~ P2 + PCSC + P7 + lc_par_hab + D11 + P4, data = train_set, fullRank = TRUE)
+train_encoded <- predict(dummies, newdata = train_set) %>% as.data.frame()
+test_encoded  <- predict(dummies, newdata = test_set) %>% as.data.frame()
+
+# Ajouter MODP_LIB séparément
+train_encoded$MODP_LIB <- train_set$MODP_LIB
+test_encoded$MODP_LIB  <- test_set$MODP_LIB
 
 # Gérer les NA
-train_data <- na.omit(train_data)
-test_data  <- na.omit(test_data)
+train_encoded <- na.omit(train_encoded)
+test_encoded  <- na.omit(test_encoded)
 
-X_train <- train_data %>% select(-"MODP_LIB")
-X_test <- test_data %>% select(-"MODP_LIB")
-Y_train <- train_data %>% select("MODP_LIB")
-Y_test <- test_data %>% select("MODP_LIB")
+# Séparer X et Y
+X_train <- train_encoded %>% select(-MODP_LIB)
+X_test  <- test_encoded %>% select(-MODP_LIB)
+Y_train <- train_encoded$MODP_LIB
+Y_test  <- test_encoded$MODP_LIB
 
 # Normalisation des variables numériques
 normalisation <- preProcess(X_train, method = c("center", "scale"))
@@ -73,14 +88,14 @@ X_test_norm  <- predict(normalisation, X_test)
 knn_pred <- knn(
   train = X_train_norm, 
   test  = X_test_norm, 
-  cl = Y_train$MODP_LIB,  
-  k = 11
+  cl    = Y_train,  
+  k     = 10
 )
 
 # Calcul de l'accuracy
-accuracy <- sum(knn_pred == Y_test$MODP_LIB) / length(Y_test$MODP_LIB) * 100
+accuracy <- sum(knn_pred == Y_test) / length(Y_test) * 100
 print(paste("Accuracy (%) :", round(accuracy, 2)))
 
-# Matrice de confusion pour voir les erreurs
-conf_matrix <- confusionMatrix(knn_pred, Y_test$MODP_LIB)
+# Matrice de confusion
+conf_matrix <- confusionMatrix(knn_pred, Y_test)
 print(conf_matrix)
