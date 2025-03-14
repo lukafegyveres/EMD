@@ -33,7 +33,7 @@ data_deter <- merge(x = df_closest, y = data_men, by.x = c("AGGLO","ANNEE_ENQUET
 
 
 # Sélection des variables utiles
-data_deter_utile <- data_deter[, c("ZFD", "ECH", "PER", "D11", "P7", "D4", "MODP_LIB")]
+data_deter_utile <- data_deter[, c("ZFD", "ECH", "PER", "D11", "PCSC", "P7", "arr_par_sup", "MODP_LIB")]
 
 # Suppression des doublons sur les identifiants individuels
 data_deter_utile <- data_deter_utile %>% distinct(ZFD, ECH, PER, .keep_all = TRUE)
@@ -45,6 +45,15 @@ data_deter_utile$MODP_LIB <- as.factor(data_deter_utile$MODP_LIB)
 
 # Convertir certaines variables en facteurs
 data_deter_utile$P7 <- as.factor(data_deter_utile$P7)
+data_deter_utile <- data_deter_utile %>%
+  mutate(
+    #PCSC_1 = ifelse(PCSC == 1, 1, 0),
+    #PCSC_2 = ifelse(PCSC == 2, 1, 0),
+    #PCSC_7 = ifelse(PCSC == 7, 1, 0), 
+    P7 = ifelse(P7 == 1, 1, 0),
+    
+  ) %>%
+  select(-PCSC) 
 
 # Séparation en train/test (80% train, 20% test) en respectant la répartition des classes
 set.seed(123)
@@ -53,14 +62,9 @@ trainIndex <- createDataPartition(data_deter_utile$MODP_LIB, p = 0.8, list = FAL
 train_set <- data_deter_utile[trainIndex, ]
 test_set  <- data_deter_utile[-trainIndex, ]
 
-# One-Hot Encoding pour D11, P7 et D4
-dummies <- dummyVars(~ D11 + P7 + D4 + arr_par_sup, data = train_set, fullRank = TRUE)
-train_encoded <- predict(dummies, newdata = train_set) %>% as.data.frame()
-test_encoded  <- predict(dummies, newdata = test_set) %>% as.data.frame()
-
 # Ajouter MODP_LIB (binaire)
-train_encoded$MODP_LIB <- train_set$MODP_LIB
-test_encoded$MODP_LIB  <- test_set$MODP_LIB
+train_encoded <- train_set
+test_encoded  <- test_set
 
 # Gérer les valeurs manquantes
 train_encoded <- na.omit(train_encoded)
@@ -82,7 +86,7 @@ knn_pred <- knn(
   train = X_train_norm, 
   test  = X_test_norm, 
   cl    = Y_train,  
-  k     = 10
+  k     = 7
 )
 
 # Calcul de l'accuracy
